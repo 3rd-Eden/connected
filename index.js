@@ -22,13 +22,23 @@ module.exports = function listen() {
    * The actual callback method that is passed in to the server which collects
    * the different events and passes it to the given callback method.
    *
+   * @param {Error}
    * @api private
    */
-  function collector() {
+  function collector(err) {
     server.removeListener('error', collector);
     server.removeListener('listening', collector);
 
-    fn.apply(this, arguments);
+    if (fn) fn.apply(server, arguments);
+    else if (err) throw err;
+  }
+
+  //
+  // Allow people to supply the server with no callback function.
+  //
+  if ('function' !== typeof fn) {
+    args.push(fn);
+    fn = null;
   }
 
   server.once('listening', collector);
