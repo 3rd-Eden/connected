@@ -1,6 +1,6 @@
 {
   "name": "connected",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Error first callback for listening on the server.",
   "main": "index.js",
   "scripts": {
